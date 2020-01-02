@@ -16,7 +16,6 @@ class Home extends Component {
     const { title, userData } = this.props;
     return (
       <div className="Home">
-        <Link to="/about">Go to About page</Link>
         <h1>Home page :: { title }</h1>
         { JSON.stringify(userData) }
       </div>

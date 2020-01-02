@@ -25,7 +25,6 @@ class About extends Component {
     const { employeeData } = this.props;
     return (
       <div className="About">
-        <Link to="/">Go to Home page</Link>
         <h1>About page</h1>
         <TableContainer component={Paper}>
           <Table className="" aria-label="simple table">

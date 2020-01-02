@@ -1,12 +1,10 @@
-import React, { lazy, Suspense, Component } from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import './App.scss';
 // import { WaitingComponent } from './common/lazyloading';
-
-const Home = lazy(() => import('./pages/home/Home'));
-const About = lazy(() => import('./pages/aboutus/About'));
+import NavComponent from './common/navigation';
+import MainRoutes from './common/routes';
 
 
 class App extends Component {
@@ -16,21 +14,9 @@ class App extends Component {
         <header className="App-header">
           Header
         </header>
+        <NavComponent></NavComponent>
         <main>
-        <Router>
-          <Switch>
-            <Route path="/about">
-              <Suspense fallback={'.....Loading'}>
-                <About />
-              </Suspense>
-            </Route>
-            <Route path="/">
-              <Suspense fallback={'.....Loading'}>
-                <Home />
-              </Suspense>
-            </Route>
-          </Switch>
-        </Router>
+          <MainRoutes></MainRoutes>
         </main>
         <footer>Footer</footer>
       </div>
