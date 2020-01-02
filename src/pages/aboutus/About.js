@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { fetchEmployeeData } from './action';
@@ -10,10 +9,26 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
+
+// Steper
+import Stepper from '@material-ui/core/Stepper';
+import Step from '@material-ui/core/Step';
+import StepLabel from '@material-ui/core/StepLabel';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
 
 import './about.scss';
 
 class About extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      activeStep: 0,
+      skipped: false,
+    }
+  }
 
   componentDidMount() {
     console.log('About us Props: ', this.props);
@@ -21,11 +36,265 @@ class About extends Component {
     fetchEmployeeData();
   }
 
+  getSteps() {
+    return ['Select campaign settings', 'Create an ad group', 'Create an ad'];
+  }
+
+  getStepContent(step) {
+    switch (step) {
+      case 0:
+        return (
+          <div>
+            <form noValidate autoComplete="off">
+              <Grid container spacing={1}>
+                <Grid item xs={6}>
+                  <TextField
+                    id="outlined-full-width"
+                    label="Label"
+                    placeholder="Placeholder"
+                    helperText="..."
+                    fullWidth
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    variant="outlined"
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <TextField
+                    id="outlined-full-width"
+                    label="Label"
+                    placeholder="Placeholder"
+                    helperText="..."
+                    fullWidth
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    variant="outlined"
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <TextField
+                    id="outlined-full-width"
+                    label="Label"
+                    placeholder="Placeholder"
+                    helperText="..."
+                    fullWidth
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    variant="outlined"
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <TextField
+                    id="outlined-full-width"
+                    label="Label"
+                    placeholder="Placeholder"
+                    helperText="..."
+                    fullWidth
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    variant="outlined"
+                  />
+                </Grid>
+              </Grid>
+            </form>
+          </div>
+        )
+      case 1:
+        return (
+          <div>
+            <form noValidate autoComplete="off">
+              <Grid container spacing={1}>
+                <Grid item xs={6}>
+                  <TextField
+                    id="outlined-full-width"
+                    label="Label"
+                    placeholder="Placeholder"
+                    helperText="..."
+                    fullWidth
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    variant="outlined"
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <TextField
+                    id="outlined-full-width"
+                    label="Label"
+                    placeholder="Placeholder"
+                    helperText="..."
+                    fullWidth
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    variant="outlined"
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <TextField
+                    id="outlined-full-width"
+                    label="Label"
+                    placeholder="Placeholder"
+                    helperText="..."
+                    fullWidth
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    variant="outlined"
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <TextField
+                    id="outlined-full-width"
+                    label="Label"
+                    placeholder="Placeholder"
+                    helperText="..."
+                    fullWidth
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    variant="outlined"
+                  />
+                </Grid>
+              </Grid>
+            </form>
+          </div>
+        );
+      case 2:
+        return (
+          <div>
+            <form noValidate autoComplete="off">
+            <Grid container spacing={1}>
+              <Grid item xs={6}>
+                <TextField
+                  id="outlined-full-width"
+                  label="Label"
+                  placeholder="Placeholder"
+                  helperText="..."
+                  fullWidth
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  variant="outlined"
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  id="outlined-full-width"
+                  label="Label"
+                  placeholder="Placeholder"
+                  helperText="..."
+                  fullWidth
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  variant="outlined"
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  id="outlined-full-width"
+                  label="Label"
+                  placeholder="Placeholder"
+                  helperText="..."
+                  fullWidth
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  variant="outlined"
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  id="outlined-full-width"
+                  label="Label"
+                  placeholder="Placeholder"
+                  helperText="..."
+                  fullWidth
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  variant="outlined"
+                />
+              </Grid>
+            </Grid>
+          </form>
+          </div>
+        );
+      default:
+        return 'Unknown step';
+    }
+  }
+
+  setActiveStep(newState) {
+    this.setState({ activeStep: newState})
+  }
+
+  handleNext = () => {
+    const { skipped, activeStep } = this.state;
+    if( activeStep === 2) {
+      return false;
+    }
+    // let newSkipped = skipped;
+    // if (isStepSkipped(activeStep)) {
+    //   newSkipped = new Set(newSkipped.values());
+    //   newSkipped.delete(activeStep);
+    // }
+
+    this.setActiveStep(activeStep + 1);
+    // setSkipped(newSkipped);
+  };
+
+  handleBack = () => {
+    const { activeStep } = this.state;
+    this.setActiveStep(activeStep - 1);
+  };
+
+  saveCard = () => {
+    console.log('Save Card');
+  }
+
   render() {
     const { employeeData } = this.props;
+    const { skipped, activeStep } = this.state;
+    const steps = this.getSteps();
     return (
       <div className="About">
         <h1>About page</h1>
+
+        <Stepper activeStep={activeStep}>
+          { 
+            steps.map((label, index) => {
+              // const stepProps = {};
+              const labelProps = {};
+              return ( <StepLabel {...labelProps}>{label}</StepLabel>);
+          })}
+        </Stepper>
+        <div>
+          {(
+              <div>
+                <div>{this.getStepContent(activeStep)}</div>
+                <div>
+                  <Button disabled={activeStep === 0} onClick={this.handleBack}>Back</Button>
+                <Button 
+                  variant="contained"
+                  color="secondary" 
+                  onClick={this.saveCard}>Save</Button>
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                    onClick={this.handleNext}>
+                    {activeStep === steps.length - 1 ? 'Done' : 'Next'}
+                  </Button>
+                </div>
+              </div>
+            )}
+        </div>
+{/* 
         <TableContainer component={Paper}>
           <Table className="" aria-label="simple table">
             <TableHead>
@@ -49,6 +318,7 @@ class About extends Component {
             </TableBody>
           </Table>
         </TableContainer>
+ */}
       </div>
     )
   }
