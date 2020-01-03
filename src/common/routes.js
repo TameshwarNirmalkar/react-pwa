@@ -8,12 +8,12 @@ const About = lazy(() => import('../pages/aboutus/About'));
 const MainRoutes = () => {
     return (
         <Switch>
-            <Route path="/about">
+            <Route exact={true} path="/about">
                 <Suspense fallback={'.....Loading'}>
                     <About />
                 </Suspense>
             </Route>
-            <Route path="/">
+            <Route exact={true} path="/">
                 <Suspense fallback={'.....Loading'}>
                     <Home />
                 </Suspense>

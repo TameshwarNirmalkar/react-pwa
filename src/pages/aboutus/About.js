@@ -18,6 +18,11 @@ import StepLabel from '@material-ui/core/StepLabel';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 
+import { getFormValues } from 'redux-form';
+
+
+import Form from './step1-form';
+
 import './about.scss';
 
 class About extends Component {
@@ -40,11 +45,25 @@ class About extends Component {
     return ['Select campaign settings', 'Create an ad group', 'Create an ad'];
   }
 
+  showResults(value) {
+    // const { formOne } = this.props;
+    // return Promise(resolve => {
+    //   setTimeout(() => {
+    //     // simulate server latency
+    //     window.alert(`You submitted:\n\n${JSON.stringify(value, null, 2)}`)
+    //     resolve()
+    //   }, 500)
+    // })
+  }
+
   getStepContent(step) {
     switch (step) {
       case 0:
         return (
           <div>
+            
+              <Form onSubmit={this.showResults}></Form>
+
             <form noValidate autoComplete="off">
               <Grid container spacing={1}>
                 <Grid item xs={6}>
@@ -271,7 +290,7 @@ class About extends Component {
             steps.map((label, index) => {
               // const stepProps = {};
               const labelProps = {};
-              return ( <StepLabel {...labelProps}>{label}</StepLabel>);
+              return ( <StepLabel key={label} {...labelProps}>{label}</StepLabel>);
           })}
         </Stepper>
         <div>
@@ -326,7 +345,8 @@ class About extends Component {
 
 const mapStateToProps = state => ({
   title: state.aboutus.title,
-  employeeData: state.aboutus.employeeData
+  employeeData: state.aboutus.employeeData,
+  // formOne: state.aboutus.formOne
 })
 
 const mapDispatchToProps = dispatch => ({
