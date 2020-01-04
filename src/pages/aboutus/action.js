@@ -1,4 +1,4 @@
-import { FETCH_EMP_DATA } from './action-types';
+import { FETCH_EMP_DATA, SET_ACTIVE_TAB } from './action-types';
 
 export const fetchEmployeeData = () => {
     return dispatch => {
@@ -8,6 +8,16 @@ export const fetchEmployeeData = () => {
                 type: FETCH_EMP_DATA,
                 payload: { employeeData: res }
             })
+        })
+    }
+}
+
+export const nextActiveTab = (activeTab) => {
+    console.log('Next State from Action ', activeTab);
+    return dispatch => {
+        dispatch({
+            type: SET_ACTIVE_TAB,
+            payload: { activeTab: activeTab }
         })
     }
 }

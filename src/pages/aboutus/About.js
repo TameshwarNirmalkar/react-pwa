@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { fetchEmployeeData } from './action';
+import { fetchEmployeeData, nextActiveTab} from './action';
+import './about.scss';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -21,227 +22,64 @@ import TextField from '@material-ui/core/TextField';
 import { getFormValues } from 'redux-form';
 
 
-import Form from './step1-form';
+import MaterialUiForm from './step1-form';
+import MaterialUiForm2 from './step2-form';
+import MaterialUiForm3 from './step3-form';
 
-import './about.scss';
+const selectedFormName = {
+  1: 'PD1',
+  2: 'PD2',
+  3: 'R1',
+}
+
+
 
 class About extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      activeStep: 0,
+      activeStep: 1,
       skipped: false,
     }
+    this.saveCard = this.saveCard.bind(this);
   }
 
   componentDidMount() {
     console.log('About us Props: ', this.props);
-    const { fetchEmployeeData } = this.props;
-    fetchEmployeeData();
+    const { fetchEmployeeData, nextAction, activeTab } = this.props;
+    // fetchEmployeeData();
+    // nextActiveTab(this.state.activeStep);
+    nextAction(activeTab);
   }
 
   getSteps() {
     return ['Select campaign settings', 'Create an ad group', 'Create an ad'];
   }
 
-  showResults(value) {
-    // const { formOne } = this.props;
-    // return Promise(resolve => {
-    //   setTimeout(() => {
-    //     // simulate server latency
-    //     window.alert(`You submitted:\n\n${JSON.stringify(value, null, 2)}`)
-    //     resolve()
-    //   }, 500)
-    // })
+  saveCard(form) {
+    const { selectedForm } = this.props;
+    console.log('Results: ', selectedForm);
   }
 
   getStepContent(step) {
     switch (step) {
-      case 0:
-        return (
-          <div>
-            
-              <Form onSubmit={this.showResults}></Form>
-
-            <form noValidate autoComplete="off">
-              <Grid container spacing={1}>
-                <Grid item xs={6}>
-                  <TextField
-                    id="outlined-full-width"
-                    label="Label"
-                    placeholder="Placeholder"
-                    helperText="..."
-                    fullWidth
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
-                    variant="outlined"
-                  />
-                </Grid>
-                <Grid item xs={6}>
-                  <TextField
-                    id="outlined-full-width"
-                    label="Label"
-                    placeholder="Placeholder"
-                    helperText="..."
-                    fullWidth
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
-                    variant="outlined"
-                  />
-                </Grid>
-                <Grid item xs={6}>
-                  <TextField
-                    id="outlined-full-width"
-                    label="Label"
-                    placeholder="Placeholder"
-                    helperText="..."
-                    fullWidth
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
-                    variant="outlined"
-                  />
-                </Grid>
-                <Grid item xs={6}>
-                  <TextField
-                    id="outlined-full-width"
-                    label="Label"
-                    placeholder="Placeholder"
-                    helperText="..."
-                    fullWidth
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
-                    variant="outlined"
-                  />
-                </Grid>
-              </Grid>
-            </form>
-          </div>
-        )
       case 1:
         return (
           <div>
-            <form noValidate autoComplete="off">
-              <Grid container spacing={1}>
-                <Grid item xs={6}>
-                  <TextField
-                    id="outlined-full-width"
-                    label="Label"
-                    placeholder="Placeholder"
-                    helperText="..."
-                    fullWidth
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
-                    variant="outlined"
-                  />
-                </Grid>
-                <Grid item xs={6}>
-                  <TextField
-                    id="outlined-full-width"
-                    label="Label"
-                    placeholder="Placeholder"
-                    helperText="..."
-                    fullWidth
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
-                    variant="outlined"
-                  />
-                </Grid>
-                <Grid item xs={6}>
-                  <TextField
-                    id="outlined-full-width"
-                    label="Label"
-                    placeholder="Placeholder"
-                    helperText="..."
-                    fullWidth
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
-                    variant="outlined"
-                  />
-                </Grid>
-                <Grid item xs={6}>
-                  <TextField
-                    id="outlined-full-width"
-                    label="Label"
-                    placeholder="Placeholder"
-                    helperText="..."
-                    fullWidth
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
-                    variant="outlined"
-                  />
-                </Grid>
-              </Grid>
-            </form>
+            <MaterialUiForm onSubmit={this.saveCard}></MaterialUiForm>
           </div>
-        );
+        )
       case 2:
         return (
           <div>
-            <form noValidate autoComplete="off">
-            <Grid container spacing={1}>
-              <Grid item xs={6}>
-                <TextField
-                  id="outlined-full-width"
-                  label="Label"
-                  placeholder="Placeholder"
-                  helperText="..."
-                  fullWidth
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                  variant="outlined"
-                />
-              </Grid>
-              <Grid item xs={6}>
-                <TextField
-                  id="outlined-full-width"
-                  label="Label"
-                  placeholder="Placeholder"
-                  helperText="..."
-                  fullWidth
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                  variant="outlined"
-                />
-              </Grid>
-              <Grid item xs={6}>
-                <TextField
-                  id="outlined-full-width"
-                  label="Label"
-                  placeholder="Placeholder"
-                  helperText="..."
-                  fullWidth
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                  variant="outlined"
-                />
-              </Grid>
-              <Grid item xs={6}>
-                <TextField
-                  id="outlined-full-width"
-                  label="Label"
-                  placeholder="Placeholder"
-                  helperText="..."
-                  fullWidth
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                  variant="outlined"
-                />
-              </Grid>
-            </Grid>
-          </form>
+            <MaterialUiForm2 onSubmit={this.saveCard}></MaterialUiForm2>
+          </div>
+        );
+      case 3:
+        return (
+          <div>
+            <MaterialUiForm3 onSubmit={this.saveCard}></MaterialUiForm3>
           </div>
         );
       default:
@@ -254,67 +92,44 @@ class About extends Component {
   }
 
   handleNext = () => {
-    const { skipped, activeStep } = this.state;
-    if( activeStep === 2) {
+    const { nextAction, activeTab } = this.props;
+    if( activeTab >= 3) {
       return false;
     }
-    // let newSkipped = skipped;
-    // if (isStepSkipped(activeStep)) {
-    //   newSkipped = new Set(newSkipped.values());
-    //   newSkipped.delete(activeStep);
-    // }
-
-    this.setActiveStep(activeStep + 1);
-    // setSkipped(newSkipped);
+    nextAction(activeTab + 1);
   };
 
   handleBack = () => {
-    const { activeStep } = this.state;
-    this.setActiveStep(activeStep - 1);
+    const { nextAction, activeTab } = this.props;
+    nextAction(activeTab - 1);
   };
 
-  saveCard = () => {
-    console.log('Save Card');
-  }
-
   render() {
-    const { employeeData } = this.props;
-    const { skipped, activeStep } = this.state;
-    const steps = this.getSteps();
+    const { employeeData, activeTab } = this.props;
     return (
       <div className="About">
         <h1>About page</h1>
-
-        <Stepper activeStep={activeStep}>
-          { 
-            steps.map((label, index) => {
-              // const stepProps = {};
-              const labelProps = {};
-              return ( <StepLabel key={label} {...labelProps}>{label}</StepLabel>);
-          })}
-        </Stepper>
         <div>
-          {(
-              <div>
-                <div>{this.getStepContent(activeStep)}</div>
+          
+            <div>
+              <div>{this.getStepContent(activeTab)}</div>
                 <div>
-                  <Button disabled={activeStep === 0} onClick={this.handleBack}>Back</Button>
-                <Button 
-                  variant="contained"
-                  color="secondary" 
-                  onClick={this.saveCard}>Save</Button>
+                <Button disabled={activeTab <= 1} onClick={this.handleBack}>Back</Button>
+                  <Button 
+                    variant="contained"
+                    color="secondary" 
+                    onClick={this.saveCard}>Save</Button>
                   <Button
                     variant="contained"
                     color="secondary"
                     onClick={this.handleNext}>
-                    {activeStep === steps.length - 1 ? 'Done' : 'Next'}
+                  {activeTab === 4 - 1 ? 'Done' : 'Next'}
                   </Button>
                 </div>
-              </div>
-            )}
+            </div>
         </div>
-{/* 
-        <TableContainer component={Paper}>
+
+        {/* <TableContainer component={Paper}>
           <Table className="" aria-label="simple table">
             <TableHead>
               <TableRow>
@@ -336,24 +151,26 @@ class About extends Component {
               ))}
             </TableBody>
           </Table>
-        </TableContainer>
- */}
+        </TableContainer> */}
+
       </div>
     )
   }
 }
 
 const mapStateToProps = state => ({
+  activeTab: state.aboutus.activeTab,
   title: state.aboutus.title,
   employeeData: state.aboutus.employeeData,
-  // formOne: state.aboutus.formOne
+  selectedForm: getFormValues(selectedFormName[state.aboutus.activeTab])(state),
 })
 
-const mapDispatchToProps = dispatch => ({
-  ...bindActionCreators({
-    fetchEmployeeData
-  }, dispatch)
-})
+const mapDispatchToProps = dispatch => {
+  return {
+    fetchEmployeeData: () => dispatch(fetchEmployeeData()),
+    nextAction: (num) => dispatch(nextActiveTab(num))
+  }
+}
 
 
 
