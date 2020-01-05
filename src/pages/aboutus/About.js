@@ -41,6 +41,33 @@ class About extends Component {
     this.state = {
       activeStep: 1,
       skipped: false,
+      P1: {
+        firstName: 'Tameshwar',
+        lastName: null,
+        email: null,
+        sex: null,
+        favoriteColor: null,
+        employed: null,
+        notes: null
+      },
+      P2: {
+        firstName: 'Nisha',
+        lastName: 'Jane Doe',
+        email: 'Cheddar',
+        sex: 'male',
+        favoriteColor: '00ff00',
+        employed: true,
+        notes: ''
+      },
+      R1: {
+        firstName: 'Lester',
+        lastName: 'Jane Doe',
+        email: 'Cheddar',
+        sex: 'male',
+        favoriteColor: '00ff00',
+        employed: true,
+        notes: ''
+      }
     }
     this.saveCard = this.saveCard.bind(this);
   }
@@ -60,6 +87,7 @@ class About extends Component {
   saveCard(form) {
     const { selectedForm } = this.props;
     console.log('Results: ', selectedForm);
+
   }
 
   getStepContent(step) {
@@ -67,13 +95,13 @@ class About extends Component {
       case 1:
         return (
           <div>
-            <MaterialUiForm onSubmit={this.saveCard}></MaterialUiForm>
+            <MaterialUiForm onSubmit={this.saveCard} initialValues={this.state.P1}></MaterialUiForm>
           </div>
         )
       case 2:
         return (
           <div>
-            <MaterialUiForm2 onSubmit={this.saveCard}></MaterialUiForm2>
+            <MaterialUiForm2 onSubmit={this.saveCard} initialValues={this.state.P2}></MaterialUiForm2>
           </div>
         );
       case 3:
@@ -105,7 +133,8 @@ class About extends Component {
   };
 
   render() {
-    const { employeeData, activeTab } = this.props;
+    const { employeeData, activeTab, hasError } = this.props;
+    console.log('Has Eror: ', hasError.syncErrors);
     return (
       <div className="About">
         <h1>About page</h1>
@@ -120,6 +149,7 @@ class About extends Component {
                     color="secondary" 
                     onClick={this.saveCard}>Save</Button>
                   <Button
+                    disabled={hasError}
                     variant="contained"
                     color="secondary"
                     onClick={this.handleNext}>
@@ -163,6 +193,7 @@ const mapStateToProps = state => ({
   title: state.aboutus.title,
   employeeData: state.aboutus.employeeData,
   selectedForm: getFormValues(selectedFormName[state.aboutus.activeTab])(state),
+  hasError: state.form[ selectedFormName[state.aboutus.activeTab] ] //(selectedFormName[state.aboutus.activeTab].syncErrors && Object.keys(selectedFormName[state.aboutus.activeTab].syncErrors).length > 0) ? true : false
 })
 
 const mapDispatchToProps = dispatch => {

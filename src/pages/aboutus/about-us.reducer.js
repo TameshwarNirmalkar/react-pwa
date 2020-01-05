@@ -3,7 +3,7 @@ import { FETCH_EMP_DATA, SET_ABT_TITLE, SET_ACTIVE_TAB } from './action-types';
 const initialStates = {
     title: null,
     employeeData: null,
-    activeTab: 2,
+    activeTab: 1,
 };
 
 const aboutUsReducer = (state = initialStates, action) => {

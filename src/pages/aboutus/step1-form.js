@@ -1,69 +1,39 @@
 import React from 'react';
-import { Field, reduxForm } from 'redux-form';
-import TextField from 'material-ui/TextField';
-import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton';
-import Checkbox from 'material-ui/Checkbox';
-import SelectField from 'material-ui/SelectField';
+import { Field, reduxForm, isPristine } from 'redux-form';
+
+import { RadioButton } from 'material-ui/RadioButton';
 import MenuItem from 'material-ui/MenuItem';
 // import asyncValidate from './asyncValidate';
 // import validate from './validate';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
-const renderTextField = (
-    { input, label, meta: { touched, error }, ...custom },
-) => (
-        <TextField
-            hintText={label}
-            floatingLabelText={label}
-            errorText={touched && error}
-            {...input}
-            {...custom}
-        />
-    );
+import { renderTextField, renderRadioGroup, renderSelectField, renderCheckbox } from '../../common/redux-form-component';
 
-const renderCheckbox = ({ input, label }) => (
-    <Checkbox
-        label={label}
-        checked={input.value ? true : false}
-        onCheck={input.onChange}
-    />
-);
+const validate = values => {
+    const errors = {}
+    if (!values.firstName) {
+        errors.firstName = 'Required'
+    } 
+    else if (!values.lastName) {
+        errors.lastName = 'Required'
+    }
+    else if (!values.notes) {
+        errors.notes = 'Required'
+    }
+    return errors
+};
 
-const renderRadioGroup = ({ input, ...rest }) => (
-    <RadioButtonGroup
-        {...input}
-        {...rest}
-        valueSelected={input.value}
-        onChange={(event, value) => input.onChange(value)}
-    />
-);
-
-const renderSelectField = (
-    { input, label, meta: { touched, error }, children, ...custom },
-) => (
-        <SelectField
-            floatingLabelText={label}
-            errorText={touched && error}
-            {...input}
-            onChange={(event, index, value) => input.onChange(value)}
-            children={children}
-            {...custom}
-        />
-    );
+// export default validate
 
 const MaterialUiForm = props => {
-    const { handleSubmit, pristine, reset, submitting, onSubmit } = props;
+    const { handleSubmit } = props;
     return (
         <div>
             <h3>Form 1</h3>
             <MuiThemeProvider>
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <form onSubmit={handleSubmit}>
                 <div>
-                    <Field
-                        name="firstName"
-                        component={renderTextField}
-                        label="First Name"
-                    />
+                    <Field name="firstName" component={renderTextField} label="First Name" />
                 </div>
                 <div>
                     <Field name="lastName" component={renderTextField} label="Last Name" />
@@ -78,11 +48,7 @@ const MaterialUiForm = props => {
                     </Field>
                 </div>
                 <div>
-                    <Field
-                        name="favoriteColor"
-                        component={renderSelectField}
-                        label="Favorite Color"
-                    >
+                    <Field name="favoriteColor" component={renderSelectField} label="Favorite Color">
                         <MenuItem value="ff0000" primaryText="Red" />
                         <MenuItem value="00ff00" primaryText="Green" />
                         <MenuItem value="0000ff" primaryText="Blue" />
@@ -92,13 +58,7 @@ const MaterialUiForm = props => {
                     <Field name="employed" component={renderCheckbox} label="Employed" />
                 </div>
                 <div>
-                    <Field
-                        name="notes"
-                        component={renderTextField}
-                        label="Notes"
-                        multiLine={true}
-                        rows={2}
-                    />
+                    <Field name="notes" component={renderTextField} label="Notes" multiLine={true} rows={2} />
                 </div>
             </form>
             </MuiThemeProvider>
@@ -106,18 +66,25 @@ const MaterialUiForm = props => {
     );
 };
 
+const mapStateToProps = (state, ownProps) => {
+    return {
+        initialValues: {
+            firstName: ownProps.first_name,
+            lastName: ownProps.lastName,
+            email: ownProps.email,
+            sex: ownProps.sex,
+            favoriteColor: ownProps.favoriteColor,
+            employed: ownProps.employed,
+            notes: ownProps.notes
+        },
+        // isPristine: isPristine(state)
+    }
+}
+
 export default reduxForm({
     form: 'PD1', // a unique identifier for this form
-    // validate,
+    validate,
     // asyncValidate,
-    initialValues: {
-        firstName: 'delivery',
-        lastName: 'Jane Doe',
-        email: 'Cheddar',
-        sex: 'male',
-        favoriteColor: '00ff00',
-        employed: true,
-        notes: ''
-    },
-    withRef: true
-})(MaterialUiForm);
+    enableReinitialize: false,
+    destroyOnUnmount: false,
+}, mapStateToProps)(MaterialUiForm);
