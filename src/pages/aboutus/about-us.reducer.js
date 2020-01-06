@@ -15,7 +15,6 @@ const aboutUsReducer = (state = initialStates, action) => {
             return { ...state, ...action.payload }
         
         case SET_ACTIVE_TAB:
-            console.log('Action Reducer: ', action);
             return { ...state, ...action.payload };
 
         default:

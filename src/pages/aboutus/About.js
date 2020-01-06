@@ -19,7 +19,7 @@ import StepLabel from '@material-ui/core/StepLabel';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 
-import { getFormValues } from 'redux-form';
+import { getFormValues, isInvalid } from 'redux-form';
 
 
 import MaterialUiForm from './step1-form';
@@ -133,8 +133,8 @@ class About extends Component {
   };
 
   render() {
-    const { employeeData, activeTab, hasError } = this.props;
-    console.log('Has Eror: ', hasError.syncErrors);
+    const { employeeData, activeTab, isInvalid } = this.props;
+    console.log('Has Eror: ', isInvalid);
     return (
       <div className="About">
         <h1>About page</h1>
@@ -146,12 +146,13 @@ class About extends Component {
                 <Button disabled={activeTab <= 1} onClick={this.handleBack}>Back</Button>
                   <Button 
                     variant="contained"
-                    color="secondary" 
+                    color="secondary"
+                    disabled={isInvalid} 
                     onClick={this.saveCard}>Save</Button>
                   <Button
-                    disabled={hasError}
                     variant="contained"
                     color="secondary"
+                    disabled={isInvalid} 
                     onClick={this.handleNext}>
                   {activeTab === 4 - 1 ? 'Done' : 'Next'}
                   </Button>
@@ -193,7 +194,8 @@ const mapStateToProps = state => ({
   title: state.aboutus.title,
   employeeData: state.aboutus.employeeData,
   selectedForm: getFormValues(selectedFormName[state.aboutus.activeTab])(state),
-  hasError: state.form[ selectedFormName[state.aboutus.activeTab] ] //(selectedFormName[state.aboutus.activeTab].syncErrors && Object.keys(selectedFormName[state.aboutus.activeTab].syncErrors).length > 0) ? true : false
+  // hasError: state.form[ selectedFormName[state.aboutus.activeTab] ] //(selectedFormName[state.aboutus.activeTab].syncErrors && Object.keys(selectedFormName[state.aboutus.activeTab].syncErrors).length > 0) ? true : false
+  isInvalid: isInvalid(selectedFormName[state.aboutus.activeTab])(state)
 })
 
 const mapDispatchToProps = dispatch => {

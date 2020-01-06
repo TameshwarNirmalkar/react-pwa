@@ -1,10 +1,8 @@
 import React from 'react';
-import { Field, reduxForm, isPristine } from 'redux-form';
+import { Field, reduxForm } from 'redux-form';
 
 import { RadioButton } from 'material-ui/RadioButton';
 import MenuItem from 'material-ui/MenuItem';
-// import asyncValidate from './asyncValidate';
-// import validate from './validate';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 import { renderTextField, renderRadioGroup, renderSelectField, renderCheckbox } from '../../common/redux-form-component';
@@ -22,8 +20,6 @@ const validate = values => {
     }
     return errors
 };
-
-// export default validate
 
 const MaterialUiForm = props => {
     const { handleSubmit } = props;
@@ -77,7 +73,6 @@ const mapStateToProps = (state, ownProps) => {
             employed: ownProps.employed,
             notes: ownProps.notes
         },
-        // isPristine: isPristine(state)
     }
 }
 
