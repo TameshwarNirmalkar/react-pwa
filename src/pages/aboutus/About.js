@@ -19,7 +19,7 @@ import StepLabel from '@material-ui/core/StepLabel';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 
-import { getFormValues, isInvalid } from 'redux-form';
+import { getFormValues, isInvalid, destroy } from 'redux-form';
 
 
 import MaterialUiForm from './step1-form';
@@ -187,6 +187,13 @@ class About extends Component {
       </div>
     )
   }
+
+  componentWillUnmount() {
+    const { nextAction, formDestroy } = this.props;
+    nextAction(1);
+    console.log('Component Will Unmount', this.props);
+    formDestroy('PD1');
+  }
 }
 
 const mapStateToProps = state => ({
@@ -201,7 +208,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => {
   return {
     fetchEmployeeData: () => dispatch(fetchEmployeeData()),
-    nextAction: (num) => dispatch(nextActiveTab(num))
+    nextAction: (num) => dispatch(nextActiveTab(num)),
+    formDestroy: (frmname) => dispatch(destroy(frmname))
   }
 }
 
