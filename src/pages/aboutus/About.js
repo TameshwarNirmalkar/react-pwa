@@ -19,7 +19,7 @@ import StepLabel from '@material-ui/core/StepLabel';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 
-import { getFormValues, isInvalid, destroy } from 'redux-form';
+import { getFormValues, isInvalid, destroy, Field } from 'redux-form';
 
 
 import MaterialUiForm from './step1-form';
@@ -48,7 +48,8 @@ class About extends Component {
         sex: null,
         favoriteColor: null,
         employed: null,
-        notes: null
+        notes: null,
+        myform: null,
       },
       P2: {
         firstName: 'Nisha',

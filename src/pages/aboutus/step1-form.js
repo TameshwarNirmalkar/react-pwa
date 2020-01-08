@@ -4,7 +4,7 @@ import { Field, reduxForm } from 'redux-form';
 import { RadioButton } from 'material-ui/RadioButton';
 import MenuItem from 'material-ui/MenuItem';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-
+import MyCustomInput from '../../common/counter';
 import { renderTextField, renderRadioGroup, renderSelectField, renderCheckbox } from '../../common/redux-form-component';
 
 const validate = values => {
@@ -28,6 +28,9 @@ const MaterialUiForm = props => {
             <h3>Form 1</h3>
             <MuiThemeProvider>
             <form onSubmit={handleSubmit}>
+                <div>
+                <Field name="myField" component={MyCustomInput} label="Test sample"/>
+                </div>
                 <div>
                     <Field name="firstName" component={renderTextField} label="First Name" />
                 </div>
@@ -71,7 +74,8 @@ const mapStateToProps = (state, ownProps) => {
             sex: ownProps.sex,
             favoriteColor: ownProps.favoriteColor,
             employed: ownProps.employed,
-            notes: ownProps.notes
+            notes: ownProps.notes,
+            myform: ownProps.myform,
         },
     }
 }
