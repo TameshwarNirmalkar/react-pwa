@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import TextField from 'material-ui/TextField';
 import { RadioButtonGroup } from 'material-ui/RadioButton';
 import Checkbox from 'material-ui/Checkbox';
@@ -45,4 +45,49 @@ export const renderSelectField = (
             {...custom}
         />
 );
+export class MyCustomInput extends Component {
+    render() {
+        const { input: { value, onChange } } = this.props
+        return (
+            <div>
+                <span>The current value is {value}.</span>
+                <button type="button" onClick={() => onChange(+value + 1)}>Inc</button>
+                <button type="button" onClick={() => onChange(+value - 1)}>Dec</button>
+            </div>
+        )
+    }
+}
+
+// export class RadioCustomButton extends Component {
+//     render() {
+//         const { input: { value, onChange }, label, ...rest } = this.props
+//         console.log('Inputs: ', this.props);
+//         return (
+//             <div>
+//                 <span>{label}</span>
+//                 <input {...rest} value={value} onChange={() => onChange(value)} />
+//             </div>
+//         )
+//     }
+// }
+
+export class RadioCustomButton extends Component {
+    render() {
+        const { input, meta, options } = this.props
+        const hasError = meta.touched && meta.error;
+
+        return (
+            <div>
+                    {
+                        options.map( (o, i) => (
+                            <label key={o.value || `label${i}`}>
+                            <input type="radio" {...input} value={o.value} checked={o.value === input.value} /> {o.title}</label>
+                            )
+                        )
+                    }
+                    {hasError && <span className="error">{meta.error}</span>}
+            </div>
+        );
+    }
+}
 

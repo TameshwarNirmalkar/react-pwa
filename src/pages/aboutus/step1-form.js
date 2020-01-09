@@ -4,8 +4,8 @@ import { Field, reduxForm } from 'redux-form';
 import { RadioButton } from 'material-ui/RadioButton';
 import MenuItem from 'material-ui/MenuItem';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import MyCustomInput from '../../common/counter';
-import { renderTextField, renderRadioGroup, renderSelectField, renderCheckbox } from '../../common/redux-form-component';
+// import MyCustomInput from '../../common/counter';
+import { MyCustomInput, RadioCustomButton, renderTextField, renderRadioGroup, renderSelectField, renderCheckbox } from '../../common/redux-form-component';
 
 const validate = values => {
     const errors = {}
@@ -29,7 +29,15 @@ const MaterialUiForm = props => {
             <MuiThemeProvider>
             <form onSubmit={handleSubmit}>
                 <div>
-                <Field name="myField" component={MyCustomInput} label="Test sample"/>
+                    {/* <Field name="isAdmin" type="radio" value="checkbook" component={RadioCustomButton} label="Is Admin"/>
+                    <Field name="isAdmin" type="radio" value="account" component={RadioCustomButton} label="Is Account"/> */}
+                    <Field component={RadioCustomButton} name="gender" required={true} options={[
+                        { title: 'Male', value: 'male' },
+                        { title: 'Female', value: 'female' }
+                    ]} />
+                </div>
+                <div>
+                    <Field name="myField" component={MyCustomInput} label="Test sample"/>
                 </div>
                 <div>
                     <Field name="firstName" component={renderTextField} label="First Name" />
