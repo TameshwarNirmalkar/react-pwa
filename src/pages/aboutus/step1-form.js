@@ -1,11 +1,12 @@
 import React from 'react';
-import { Field, reduxForm } from 'redux-form';
+import { Field, reduxForm, Form  } from 'redux-form';
 
 import { RadioButton } from 'material-ui/RadioButton';
 import MenuItem from 'material-ui/MenuItem';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 // import MyCustomInput from '../../common/counter';
-import { MyCustomInput, RadioCustomButton, renderTextField, renderRadioGroup, renderSelectField, renderCheckbox } from '../../common/redux-form-component';
+import { MyCustomInput, RadioCustomButton, renderTextField, 
+    renderRadioGroup, renderSelectField, renderCheckbox, RenderDatePicker } from '../../common/redux-form-component';
 
 const validate = values => {
     const errors = {}
@@ -27,10 +28,8 @@ const MaterialUiForm = props => {
         <div>
             <h3>Form 1</h3>
             <MuiThemeProvider>
-            <form onSubmit={handleSubmit}>
+            <Form onSubmit={handleSubmit}>
                 <div>
-                    {/* <Field name="isAdmin" type="radio" value="checkbook" component={RadioCustomButton} label="Is Admin"/>
-                    <Field name="isAdmin" type="radio" value="account" component={RadioCustomButton} label="Is Account"/> */}
                     <Field component={RadioCustomButton} name="gender" required={true} options={[
                         { title: 'Male', value: 'male' },
                         { title: 'Female', value: 'female' }
@@ -43,7 +42,7 @@ const MaterialUiForm = props => {
                     <Field name="firstName" component={renderTextField} label="First Name" />
                 </div>
                 <div>
-                    <Field name="lastName" component={renderTextField} label="Last Name" />
+                    <Field name="dob" dateFormat="DD/MM/YYYY" defaultValue={new Date()} component={ RenderDatePicker } label="Date of Birth" />
                 </div>
                 <div>
                     <Field name="email" component={renderTextField} label="Email" />
@@ -67,7 +66,7 @@ const MaterialUiForm = props => {
                 <div>
                     <Field name="notes" component={renderTextField} label="Notes" multiLine={true} rows={2} />
                 </div>
-            </form>
+            </Form>
             </MuiThemeProvider>
         </div>
     );

@@ -3,6 +3,10 @@ import TextField from 'material-ui/TextField';
 import { RadioButtonGroup } from 'material-ui/RadioButton';
 import Checkbox from 'material-ui/Checkbox';
 import SelectField from 'material-ui/SelectField';
+// import DatePicker from 'material-ui/DatePicker';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import moment from 'moment';
 
 export const renderTextField = (
     { input, label, meta: { touched, error }, ...custom },
@@ -71,23 +75,37 @@ export class MyCustomInput extends Component {
 //     }
 // }
 
-export class RadioCustomButton extends Component {
-    render() {
-        const { input, meta, options } = this.props
-        const hasError = meta.touched && meta.error;
-
-        return (
-            <div>
-                    {
-                        options.map( (o, i) => (
-                            <label key={o.value || `label${i}`}>
-                            <input type="radio" {...input} value={o.value} checked={o.value === input.value} /> {o.title}</label>
-                            )
-                        )
-                    }
-                    {hasError && <span className="error">{meta.error}</span>}
-            </div>
-        );
-    }
+export const RadioCustomButton = ({ input, meta, options }) => {
+    const hasError = meta.touched && meta.error;
+    return (
+        <div>
+            {
+                options.map( (o, i) => (
+                    <label key={o.value || `label${i}`}>
+                        <input type="radio" {...input} value={o.value} checked={o.value === input.value} /> 
+                        {o.title}
+                    </label>
+                    )
+                )
+            }
+            { hasError && <span className="error">{meta.error}</span> }
+        </div>
+    );
 }
 
+export const RenderDatePicker = ({input, placeholder, defaultValue, meta: {touched, error} }) => (
+    <div>
+        <DatePicker {...input} 
+            autoOk={true}
+            defaultValue={defaultValue} 
+            dateForm="MM/DD/YYYY" 
+            selected={input.value ? moment(input.value).format('MM/DD/YYYY') : null} 
+            onChange={(event, value) => {
+                console.log('Date picker value:::::: \n\n\n', event);
+                return input.onChange(moment(event).format('MM/DD/YYYY'))
+            }}
+        />
+        {touched && error && <span>{error}</span>}
+    </div>
+);
+  

@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import './App.scss';
 // import { WaitingComponent } from './common/lazyloading';
+import HeaderComponent from './common/header';
 import NavComponent from './common/navigation';
 import MainRoutes from './common/routes';
 
@@ -11,7 +12,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">Header</header>
+        <HeaderComponent userName="Tameshwar" isLoggedIn="true"></HeaderComponent>
         <NavComponent></NavComponent>
         <main>
           <MainRoutes></MainRoutes>
