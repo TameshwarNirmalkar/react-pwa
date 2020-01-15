@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { fetchEmployeeData, nextActiveTab} from './action';
+import { getCities } from '../../common/bookingsystem/action';
 import './about.scss';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -25,6 +26,8 @@ import { getFormValues, isInvalid, destroy, Field } from 'redux-form';
 import MaterialUiForm from './step1-form';
 import MaterialUiForm2 from './step2-form';
 import MaterialUiForm3 from './step3-form';
+
+import BookingSystemView from '../../common/bookingsystem/view';
 
 const selectedFormName = {
   1: 'PD1',
@@ -75,10 +78,11 @@ class About extends Component {
 
   componentDidMount() {
     console.log('About us Props: ', this.props);
-    const { fetchEmployeeData, nextAction, activeTab } = this.props;
+    const { fetchEmployeeData, nextAction, activeTab, getCityWise } = this.props;
     // fetchEmployeeData();
     // nextActiveTab(this.state.activeStep);
     nextAction(activeTab);
+    getCityWise();
   }
 
   getSteps() {
@@ -96,7 +100,8 @@ class About extends Component {
       case 1:
         return (
           <div>
-            <MaterialUiForm onSubmit={this.saveCard} initialValues={this.state.P1}></MaterialUiForm>
+            <BookingSystemView></BookingSystemView>
+            {/* <MaterialUiForm onSubmit={this.saveCard} initialValues={this.state.P1}></MaterialUiForm> */}
           </div>
         )
       case 2:
@@ -203,17 +208,18 @@ const mapStateToProps = state => ({
   employeeData: state.aboutus.employeeData,
   selectedForm: getFormValues(selectedFormName[state.aboutus.activeTab])(state),
   // hasError: state.form[ selectedFormName[state.aboutus.activeTab] ] //(selectedFormName[state.aboutus.activeTab].syncErrors && Object.keys(selectedFormName[state.aboutus.activeTab].syncErrors).length > 0) ? true : false
-  isInvalid: isInvalid(selectedFormName[state.aboutus.activeTab])(state)
+  isInvalid: isInvalid(selectedFormName[state.aboutus.activeTab])(state),
+  bookingDetails: state.bookingSytem.bookingPayload,
+  cities: state.bookingSytem.cities
 })
 
 const mapDispatchToProps = dispatch => {
   return {
     fetchEmployeeData: () => dispatch(fetchEmployeeData()),
     nextAction: (num) => dispatch(nextActiveTab(num)),
-    formDestroy: (frmname) => dispatch(destroy(frmname))
+    formDestroy: (frmname) => dispatch(destroy(frmname)),
+    getCityWise: () => dispatch( getCities() ),
   }
 }
-
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(About);
