@@ -7,7 +7,6 @@ const BookingSystemView = (props) => {
     console.log('Props: ', props);
     return (
         <div>
-            <div>booking System view</div>
             <BookingForm></BookingForm>
         </div>
     );

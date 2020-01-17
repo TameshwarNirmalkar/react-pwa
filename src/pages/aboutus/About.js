@@ -148,7 +148,7 @@ class About extends Component {
           
             <div>
               <div>{this.getStepContent(activeTab)}</div>
-                <div>
+                <div hidden={true}>
                 <Button disabled={activeTab <= 1} onClick={this.handleBack}>Back</Button>
                   <Button 
                     variant="contained"

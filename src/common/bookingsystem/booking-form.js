@@ -1,15 +1,9 @@
 import React from 'react';
-import { Field, reduxForm } from 'redux-form';
-import { RadioButton } from 'material-ui/RadioButton';
+import { Field, reduxForm, getFormValues } from 'redux-form';
 import MenuItem from 'material-ui/MenuItem';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import {
-    MuiPickersUtilsProvider,
-    KeyboardTimePicker,
-    KeyboardDatePicker,
-  } from '@material-ui/pickers';
-
-import { renderTextField, renderRadioGroup, renderSelectField, renderCheckbox } from '../../common/redux-form-component';
+import Button from '@material-ui/core/Button';
+import { RenderMaterialDatePicker, renderSelectField } from '../../common/redux-form-component';
 
 const validate = values => {
     const errors = {}
@@ -26,60 +20,48 @@ const validate = values => {
 };
 
 const BookingForm = props => {
-    const [selectedDate, setSelectedDate] = React.useState(new Date('2014-08-18T21:11:54'));
+    const [selectedDate, setSelectedDate] = React.useState(new Date());
     const handleDateChange = date => { setSelectedDate(date); };
-    const { handleSubmit } = props;
+    const { handleSubmit, initialValues } = props;
+
+    const submitButton = () => {
+        console.log('Data', getFormValues('bookingform')(initialValues));
+    }
     return (
         <div className="container">
             <h3>Booking System Form</h3>
             <MuiThemeProvider>
                 <form onSubmit={handleSubmit}>
                     <div className="row">
-                    <div className="col-md-6">
-                        <Field
-                            name="fullName"
-                            component={renderTextField}
-                            label="Full Name"
-                        />
-                    </div>
-                    <div className="col-md-6">
-                        <KeyboardDatePicker
-                            disableToolbar
-                            variant="inline"
-                            format="MM/dd/yyyy"
-                            margin="normal"
-                            id="date-picker-inline"
-                            label="Date picker inline"
-                            value={selectedDate}
-                            onChange={handleDateChange}
-                            KeyboardButtonProps={{
-                                'aria-label': 'change date',
-                            }}
-                            />
-                    </div>
-                    <div className="col-md-6">
-                        <Field name="email" component={renderTextField} label="Email" />
-                    </div>
-                    <div className="col-md-6">
-                        <Field name="sex" component={renderRadioGroup}>
-                            <RadioButton value="male" label="male" />
-                            <RadioButton value="female" label="female" />
-                        </Field>
-                    </div>
-                    <div>
-                        <Field
-                            name="favoriteColor"
-                            component={renderSelectField}
-                            label="Favorite Color"
-                        >
-                            <MenuItem value="ff0000" primaryText="Red" />
-                            <MenuItem value="00ff00" primaryText="Green" />
-                            <MenuItem value="0000ff" primaryText="Blue" />
-                        </Field>
-                    </div>
-                    <div className="col-md-6">
-                        <Field name="employed" component={renderCheckbox} label="Employed" />
-                    </div>
+                        <div className="col-md-6">
+                            <div>
+                                <Field name="source" component={renderSelectField} label="Source City">
+                                    <MenuItem value="PUN" primaryText="Pune" />
+                                    <MenuItem value="MUM" primaryText="Mumbai" />
+                                    <MenuItem value="DEH" primaryText="Delhi" />
+                                </Field>
+                            </div>
+                            <div>
+                                <Field name="destination" component={renderSelectField} label="Destination City">
+                                    <MenuItem value="PUN" primaryText="Pune" />
+                                    <MenuItem value="MUM" primaryText="Mumbai" />
+                                    <MenuItem value="DEH" primaryText="Delhi" />
+                                </Field>
+                            </div>
+                        </div>
+                        <div className="col-md-6">
+                            <div>
+                                <Field name="travelDate" component={RenderMaterialDatePicker} label="Travel Date" />
+                            </div>
+
+                            <div>
+                                <Field name="returnDate" component={RenderMaterialDatePicker} label="Return Date" />
+                            </div>
+                            
+                        </div>
+                        <div>
+                            <Button variant="contained" color="primary" onClick={submitButton}>Primary</Button>
+                        </div>
                     </div>
                 </form>
             </MuiThemeProvider>
@@ -90,13 +72,10 @@ const BookingForm = props => {
 const mapStateToProps = (state, ownProps) => {
     return {
         initialValues: {
-            firstName: 'delivery',
-            lastName: 'Jane Doe',
-            email: 'Cheddar',
-            sex: 'male',
-            favoriteColor: '00ff00',
-            employed: true,
-            notes: ''
+            source: "PUN",
+            destination: "MUM",
+            travelDate: new Date(),
+            returnDate: new Date(),
         },
     }
 };
@@ -106,5 +85,11 @@ export default reduxForm({
     validate,
     enableReinitialize: false,
     destroyOnUnmount: false,
-    withRef: true
+    withRef: true,
+    initialValues: {
+        source: "PUN",
+        destination: "MUM",
+        travelDate: new Date(),
+        returnDate: new Date(),
+    },
 }, mapStateToProps)(BookingForm);

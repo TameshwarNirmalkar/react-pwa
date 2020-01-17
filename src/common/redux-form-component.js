@@ -7,6 +7,11 @@ import SelectField from 'material-ui/SelectField';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import moment from 'moment';
+import {
+    MuiPickersUtilsProvider,
+    KeyboardDatePicker,
+  } from '@material-ui/pickers';
+  import DateFnsUtils from '@date-io/date-fns';
 
 export const renderTextField = (
     { input, label, meta: { touched, error }, ...custom },
@@ -37,9 +42,7 @@ export const renderRadioGroup = ({ input, ...rest }) => (
     />
 );
 
-export const renderSelectField = (
-    { input, label, meta: { touched, error }, children, ...custom },
-) => (
+export const renderSelectField = ({ input, label, meta: { touched, error }, children, ...custom }) => (
         <SelectField
             floatingLabelText={label}
             errorText={touched && error}
@@ -62,18 +65,24 @@ export class MyCustomInput extends Component {
     }
 }
 
-// export class RadioCustomButton extends Component {
-//     render() {
-//         const { input: { value, onChange }, label, ...rest } = this.props
-//         console.log('Inputs: ', this.props);
-//         return (
-//             <div>
-//                 <span>{label}</span>
-//                 <input {...rest} value={value} onChange={() => onChange(value)} />
-//             </div>
-//         )
-//     }
-// }
+export const RenderMaterialDatePicker = ({input, label, meta: {touched, error}}) => (
+    <MuiPickersUtilsProvider utils={DateFnsUtils}>
+    <KeyboardDatePicker
+        name={input.name}
+        disableToolbar
+        variant="inline"
+        format="MM/dd/yyyy"
+        margin="normal"
+        id="date-picker-inline"
+        label={label}
+        value={input.value}
+        onChange={input.onChange}
+        KeyboardButtonProps={{
+            'aria-label': 'change date',
+        }}
+    />
+    </MuiPickersUtilsProvider>
+);
 
 export const RadioCustomButton = ({ input, meta, options }) => {
     const hasError = meta.touched && meta.error;
