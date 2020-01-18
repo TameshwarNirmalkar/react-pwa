@@ -7,26 +7,25 @@ import { RenderMaterialDatePicker, renderSelectField } from '../../common/redux-
 
 const validate = values => {
     const errors = {}
-    if (!values.firstName) {
-        errors.firstName = 'Required'
+    if (!values.source) {
+        errors.source = 'Required'
     }
-    else if (!values.lastName) {
-        errors.lastName = 'Required'
+    else if (!values.destination) {
+        errors.destination = 'Required'
     }
-    else if (!values.notes) {
-        errors.notes = 'Required'
+    else if (!values.travelDate) {
+        errors.travelDate = 'Required'
+    }
+    else if (!values.returnDate) {
+        errors.returnDate = 'Required'
     }
     return errors
 };
 
-const BookingForm = props => {
-    const [selectedDate, setSelectedDate] = React.useState(new Date());
-    const handleDateChange = date => { setSelectedDate(date); };
-    const { handleSubmit, initialValues } = props;
+const BookingForm = (props) => {
+    
+    const { handleSubmit, pristine, submitting } = props
 
-    const submitButton = () => {
-        console.log('Data', getFormValues('bookingform')(initialValues));
-    }
     return (
         <div className="container">
             <h3>Booking System Form</h3>
@@ -60,24 +59,13 @@ const BookingForm = props => {
                             
                         </div>
                         <div>
-                            <Button variant="contained" color="primary" onClick={submitButton}>Primary</Button>
+                            <Button variant="contained" disabled={pristine || submitting} color="primary" type="submit">Primary</Button>
                         </div>
                     </div>
                 </form>
             </MuiThemeProvider>
         </div>
     );
-};
-
-const mapStateToProps = (state, ownProps) => {
-    return {
-        initialValues: {
-            source: "PUN",
-            destination: "MUM",
-            travelDate: new Date(),
-            returnDate: new Date(),
-        },
-    }
 };
 
 export default reduxForm({
@@ -92,4 +80,4 @@ export default reduxForm({
         travelDate: new Date(),
         returnDate: new Date(),
     },
-}, mapStateToProps)(BookingForm);
+})(BookingForm);

@@ -95,6 +95,7 @@ class About extends Component {
 
   }
 
+
   getStepContent(step) {
     switch (step) {
       case 1:

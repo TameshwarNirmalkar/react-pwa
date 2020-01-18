@@ -77,6 +77,7 @@ export const RenderMaterialDatePicker = ({input, label, meta: {touched, error}})
         label={label}
         value={input.value}
         onChange={input.onChange}
+        autoOk={true}
         KeyboardButtonProps={{
             'aria-label': 'change date',
         }}

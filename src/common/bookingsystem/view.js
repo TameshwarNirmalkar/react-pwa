@@ -2,13 +2,16 @@ import React, { Fragment } from 'react';
 import BookingForm from './booking-form';
 
 
-
 const BookingSystemView = (props) => {
-    console.log('Props: ', props);
+
+    const handleSubmit = (values) => {
+        console.log('Values: ', values);
+    };
+
     return (
-        <div>
-            <BookingForm></BookingForm>
-        </div>
+        <Fragment>
+            <BookingForm onSubmit={handleSubmit}></BookingForm>
+        </Fragment>
     );
 }
 
