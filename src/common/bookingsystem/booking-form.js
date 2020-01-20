@@ -1,5 +1,5 @@
 import React from 'react';
-import { Field, reduxForm, getFormValues } from 'redux-form';
+import { Field, reduxForm } from 'redux-form';
 import MenuItem from 'material-ui/MenuItem';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Button from '@material-ui/core/Button';
@@ -24,7 +24,7 @@ const validate = values => {
 
 const BookingForm = (props) => {
     
-    const { handleSubmit, pristine, submitting } = props
+    const { handleSubmit, pristine, submitting } = props;
 
     return (
         <div className="container">

@@ -3,6 +3,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { fetchData, setTitle } from './action';
+import SyouvPanel from './../../common/syouvpanel/syouv-panel';
+
+
 
 class Home extends Component {
   
@@ -11,13 +14,19 @@ class Home extends Component {
     fetchData();
     setTitle();
   }
+
+  getFormData = (values) => {
+    console.log('Form Data', values);
+  }
   
   render() {
     const { title, userData } = this.props;
+    const intialVal = { DMSVarientCode: "DMSM011", DMSModalCode: "MM102", DMSColorCode: "CL02"};
     return (
       <div className="Home">
         <h1>Home page :: { title }</h1>
-        { JSON.stringify(userData) }
+        <SyouvPanel onSubmit={this.getFormData} initialValues={intialVal}></SyouvPanel>
+        {/* { JSON.stringify(userData) } */}
       </div>
     )
   }

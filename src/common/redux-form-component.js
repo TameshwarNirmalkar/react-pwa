@@ -7,11 +7,13 @@ import SelectField from 'material-ui/SelectField';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import moment from 'moment';
+import ToggleButton from '@material-ui/lab/ToggleButton';
+import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 import {
     MuiPickersUtilsProvider,
     KeyboardDatePicker,
-  } from '@material-ui/pickers';
-  import DateFnsUtils from '@date-io/date-fns';
+} from '@material-ui/pickers';
+import DateFnsUtils from '@date-io/date-fns';
 
 export const renderTextField = (
     { input, label, meta: { touched, error }, ...custom },
@@ -43,6 +45,7 @@ export const renderRadioGroup = ({ input, ...rest }) => (
 );
 
 export const renderSelectField = ({ input, label, meta: { touched, error }, children, ...custom }) => (
+    <div>
         <SelectField
             floatingLabelText={label}
             errorText={touched && error}
@@ -51,6 +54,8 @@ export const renderSelectField = ({ input, label, meta: { touched, error }, chil
             children={children}
             {...custom}
         />
+        {/* {touched && error && <span>{error}</span>} */}
+    </div>
 );
 export class MyCustomInput extends Component {
     render() {
@@ -65,23 +70,24 @@ export class MyCustomInput extends Component {
     }
 }
 
-export const RenderMaterialDatePicker = ({input, label, meta: {touched, error}}) => (
+export const RenderMaterialDatePicker = ({ input, label, id, meta: { touched, error } }) => (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
-    <KeyboardDatePicker
-        name={input.name}
-        disableToolbar
-        variant="inline"
-        format="MM/dd/yyyy"
-        margin="normal"
-        id="date-picker-inline"
-        label={label}
-        value={input.value}
-        onChange={input.onChange}
-        autoOk={true}
-        KeyboardButtonProps={{
-            'aria-label': 'change date',
-        }}
-    />
+        <KeyboardDatePicker
+            name={input.name}
+            disableToolbar
+            variant="inline"
+            format="MM/dd/yyyy"
+            margin="normal"
+            id={id}
+            label={label}
+            value={input.value}
+            onChange={input.onChange}
+            autoOk={true}
+            KeyboardButtonProps={{
+                'aria-label': 'change date',
+            }}
+        />
+        {touched && error(<span className="error">{error}</span>)}
     </MuiPickersUtilsProvider>
 );
 
@@ -90,26 +96,26 @@ export const RadioCustomButton = ({ input, meta, options }) => {
     return (
         <div>
             {
-                options.map( (o, i) => (
+                options.map((o, i) => (
                     <label key={o.value || `label${i}`}>
-                        <input type="radio" {...input} value={o.value} checked={o.value === input.value} /> 
+                        <input type="radio" {...input} value={o.value} checked={o.value === input.value} />
                         {o.title}
                     </label>
-                    )
+                )
                 )
             }
-            { hasError && <span className="error">{meta.error}</span> }
+            {hasError && <span className="error">{meta.error}</span>}
         </div>
     );
 }
 
-export const RenderDatePicker = ({input, placeholder, defaultValue, meta: {touched, error} }) => (
+export const RenderDatePicker = ({ input, placeholder, defaultValue, meta: { touched, error } }) => (
     <div>
-        <DatePicker {...input} 
+        <DatePicker {...input}
             autoOk={true}
-            defaultValue={defaultValue} 
-            dateForm="MM/DD/YYYY" 
-            selected={input.value ? moment(input.value).format('MM/DD/YYYY') : null} 
+            defaultValue={defaultValue}
+            dateForm="MM/DD/YYYY"
+            selected={input.value ? moment(input.value).format('MM/DD/YYYY') : null}
             onChange={(event, value) => {
                 console.log('Date picker value:::::: \n\n\n', event);
                 return input.onChange(moment(event).format('MM/DD/YYYY'))
@@ -118,4 +124,20 @@ export const RenderDatePicker = ({input, placeholder, defaultValue, meta: {touch
         {touched && error && <span>{error}</span>}
     </div>
 );
-  
+
+export const RenderToggleButton = ({ input: {value, onChange}, meta, options }) => {
+    const hasError = meta.touched && meta.error;
+    return (
+        <div>
+            <ToggleButtonGroup size="small" exclusive value={value} onChange={(evt, val) => onChange(val)}>
+                {
+                    options.map((item, i) => (
+                        <ToggleButton key={i} value={item.DMSColorCode}>{item.DMSColorCode}</ToggleButton>
+                    ))
+                }
+            </ToggleButtonGroup>
+            {hasError && <span className="error">{meta.error}</span>}
+        </div>
+    );
+}
+
