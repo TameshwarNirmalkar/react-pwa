@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-// import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { fetchData, setTitle } from './action';
@@ -8,6 +8,11 @@ import SyouvPanel from './../../common/syouvpanel/syouv-panel';
 
 
 class Home extends Component {
+
+  constructor(props) {
+    super(props);
+    console.log('HIstory Props:::\n\n\n\n\n', this.props)
+  }
   
   componentDidMount() {
     const { fetchData, setTitle } = this.props;
@@ -25,6 +30,12 @@ class Home extends Component {
     return (
       <div className="Home">
         <h1>Home page :: { title }</h1>
+        <Link to={{
+          pathname: "/about",
+          state: {
+            fromNotifications: true
+          }
+        }}>About us</Link>
         <SyouvPanel onSubmit={this.getFormData} initialValues={intialVal}></SyouvPanel>
         {/* { JSON.stringify(userData) } */}
       </div>
@@ -44,4 +55,4 @@ const mapDispatchToProps = dispatch => ({
   }, dispatch)
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Home));

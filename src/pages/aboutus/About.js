@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { withRouter } from 'react-router-dom'
+
+
 import { fetchEmployeeData, nextActiveTab} from './action';
 import { getCities } from '../../common/bookingsystem/action';
 import './about.scss';
@@ -74,6 +77,9 @@ class About extends Component {
       }
     }
     this.saveCard = this.saveCard.bind(this);
+    
+    // const { fromNotifications } = this.props.location.state;
+    console.log('About us Props::: \n\n\n\n\n', this.props);
   }
 
   componentDidMount() {
@@ -223,4 +229,4 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(About);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(About));
