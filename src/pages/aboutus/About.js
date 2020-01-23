@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { withRouter } from 'react-router-dom'
+import { withRouter } from 'react-router-dom';
+import { push } from 'connected-react-router';
 
 
 import { fetchEmployeeData, nextActiveTab} from './action';
@@ -91,6 +92,10 @@ class About extends Component {
     getCityWise();
   }
 
+  componentDidUpdate(oProps, nProps) {
+    console.log('Previous:::', oProps, "nextProps::::", nProps)
+  }
+
   getSteps() {
     return ['Select campaign settings', 'Create an ad group', 'Create an ad'];
   }
@@ -145,12 +150,25 @@ class About extends Component {
     nextAction(activeTab - 1);
   };
 
+  navigateTo() {
+    const { navigateTo } = this.props;
+    // aboutUsRouter.push({
+    //   pathname: '/',
+    //   state: {isHomeActive: true}
+    // })
+    navigateTo({
+      pathname: "/",
+      state: {isHomeActive: true}
+    })
+  }
+
   render() {
     const { employeeData, activeTab, isInvalid } = this.props;
     console.log('Has Eror: ', isInvalid);
     return (
       <div className="About">
-        <h1>About page</h1>
+        <h1 onClick={() => this.navigateTo()}>About page</h1>
+
         <div>
           
             <div>
@@ -217,7 +235,8 @@ const mapStateToProps = state => ({
   // hasError: state.form[ selectedFormName[state.aboutus.activeTab] ] //(selectedFormName[state.aboutus.activeTab].syncErrors && Object.keys(selectedFormName[state.aboutus.activeTab].syncErrors).length > 0) ? true : false
   isInvalid: isInvalid(selectedFormName[state.aboutus.activeTab])(state),
   bookingDetails: state.bookingSytem.bookingPayload,
-  cities: state.bookingSytem.cities
+  cities: state.bookingSytem.cities,
+  aboutUsRouter: state.router,
 })
 
 const mapDispatchToProps = dispatch => {
@@ -226,7 +245,8 @@ const mapDispatchToProps = dispatch => {
     nextAction: (num) => dispatch(nextActiveTab(num)),
     formDestroy: (frmname) => dispatch(destroy(frmname)),
     getCityWise: () => dispatch( getCities() ),
+    navigateTo: (path) => dispatch( push(path) )
   }
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(About));
+export default connect(mapStateToProps, mapDispatchToProps)(About);
