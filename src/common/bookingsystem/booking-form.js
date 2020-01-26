@@ -1,4 +1,5 @@
 import React from 'react';
+import { push } from 'connected-react-router';
 import { Field, reduxForm } from 'redux-form';
 import MenuItem from 'material-ui/MenuItem';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -24,11 +25,17 @@ const validate = values => {
 
 const BookingForm = (props) => {
     
-    const { handleSubmit, pristine, submitting } = props;
-
+    const { handleSubmit, pristine, submitting, dispatch } = props;
+    console.log("Properties:::::", props);
     return (
         <div className="container">
             <h3>Booking System Form</h3>
+            <Button onClick={() => 
+                dispatch(push({
+                    pathName: '/home',
+                    state: {pageName: "Home"}
+                })
+            )}>Naviate to Home from sub child</Button>
             <MuiThemeProvider>
                 <form onSubmit={handleSubmit}>
                     <div className="row">
@@ -68,6 +75,14 @@ const BookingForm = (props) => {
     );
 };
 
+const mapStateToProps = (state, ownProps) => ({
+    bookingFormProps: "This sis booking From"
+})
+
+const mapDispatchToProps = (dispatch) => ({
+    
+})
+
 export default reduxForm({
     form: 'bookingform', // a unique identifier for this form
     validate,
@@ -80,4 +95,4 @@ export default reduxForm({
         travelDate: new Date(),
         returnDate: new Date(),
     },
-})(BookingForm);
+}, mapStateToProps, mapDispatchToProps)(BookingForm);

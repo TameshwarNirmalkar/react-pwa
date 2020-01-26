@@ -1,10 +1,10 @@
-import React, { Component } from 'react'
+import React from 'react'
 
 const HeaderComponent = ({userName, isLoggedIn}) => (
     <div style={{display: 'flex', flex: '1', 
         backgroundColor: '#333', color: '#fff', padding: '10px 5px',
         justifyContent: 'space-between'}}>
-        <div><img src="./logo.192.png" /></div>
+        <div><img src="../logo.192.png" /></div>
         <div>
             <span style={{paddingRight: '10px'}}>User Name::: {userName}</span>
             <span>{

@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { fetchData, setTitle } from './action';
 import SyouvPanel from './../../common/syouvpanel/syouv-panel';
-
+import PhoneBook from '../phonebook/phonebook';
 
 
 class Home extends Component {
@@ -25,6 +25,10 @@ class Home extends Component {
   }
   
   render() {
+    const contactData = [
+      {pname: "Tameshwar", pnumber: "+639221113434"},
+      {pname: "Falaksh", pnumber: "+639223333434"}
+      ];
     const { title, userData } = this.props;
     const intialVal = { DMSVarientCode: "DMSM011", DMSModalCode: "MM102", DMSColorCode: "CL02"};
     return (
@@ -36,7 +40,8 @@ class Home extends Component {
             fromNotifications: true
           }
         }}>About us</Link>
-        <SyouvPanel onSubmit={this.getFormData} initialValues={intialVal}></SyouvPanel>
+        <PhoneBook data={contactData} pollInterval={200} />
+        {/* <SyouvPanel onSubmit={this.getFormData} initialValues={intialVal}></SyouvPanel> */}
         {/* { JSON.stringify(userData) } */}
       </div>
     )
