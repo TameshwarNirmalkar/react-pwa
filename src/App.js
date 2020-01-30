@@ -6,13 +6,12 @@ import './App.scss';
 import HeaderComponent from './common/header';
 import NavComponent from './common/navigation';
 import MainRoutes from './common/routes';
-
 import { ConnectedRouter } from 'connected-react-router';
 
 class App extends Component {
   constructor(props) {
     super(props);
-    console.log('APPPP:::\n\n\n\n\n\n\n', this.props);
+    // console.log('APPPP:::\n\n\n\n\n\n\n', this.props);
   }
 
   render() {

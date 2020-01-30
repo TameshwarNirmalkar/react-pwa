@@ -11,7 +11,8 @@ class Home extends Component {
 
   constructor(props) {
     super(props);
-    console.log('HIstory Props:::\n\n\n\n\n', this.props)
+    // console.log('HIstory Props:::\n\n\n\n\n', this.props)
+    console.log(`Test Name: ${process.env.REACT_APP_BASE_URL}`);
   }
   
   componentDidMount() {
