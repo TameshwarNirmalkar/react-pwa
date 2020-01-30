@@ -11,7 +11,9 @@
     "live": "node server",
     "start:env": "./node_modules/.bin/env-cmd -e development -r ./config/.env",
     "exp": "set NODE_ENV=development && ./node_modules/.bin/env-cmd -e development .env",
-    "start:dev": "env-cmd -f ./config/.env.dev react-scripts start"
+    "start:dev": "env-cmd -f ./config/.env.dev react-scripts start",
+    "wp:start": "webpack-dev-server --config build-utils/webpack.config.js --env.env=dev",
+    "wp:build": "webpack --config build-utils/webpack.config.js --env.env=prod"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -55,11 +57,19 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
+    "babel-eslint": "^10.0.3",
+    "clean-webpack-plugin": "^3.0.0",
+    "dotenv-webpack": "^1.7.0",
     "env-cmd": "^10.0.1",
+    "eslint-loader": "^3.0.3",
     "express": "^4.17.1",
+    "html-webpack-plugin": "^3.2.0",
     "node-sass": "^4.13.0",
     "react-scripts": "3.3.0",
     "react-snapshot": "^1.3.0",
-    "redux-logger": "^3.0.6"
+    "redux-logger": "^3.0.6",
+    "webpack-bundle-analyzer": "^3.6.0",
+    "webpack-merge": "^4.2.2",
+    "webpack-visualizer-plugin": "^0.1.11"
   }
 }
