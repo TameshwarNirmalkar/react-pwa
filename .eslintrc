@@ -1,4 +1,65 @@
 {
     "parser": "babel-eslint",
-    "rules": {}
+    "extends": [
+        // "eslint-config-babel",
+        "eslint-config-prettier"
+    ],
+    "settings": {
+        "react": {
+            "version": "99.99.99"
+        }
+    },
+    "env": {
+        "browser": true,
+        "commonjs": true,
+        "es6": true,
+        "node": true
+    },
+    "parserOptions": {
+        "ecmaVersion": 8,
+        "ecmaFeatures": {
+            "experimentalObjectRestSpread": true,
+            "jsx": true,
+            "legacyDecorators": true
+        },
+        "sourceType": "module",
+        "allowImportExportEverywhere": false
+    },
+    "presets": [
+        "@babel/preset-env",
+        "@babel/preset-react"
+    ],
+    "plugins": [
+        "prettier",
+        "react",
+        "@babel/plugin-proposal-class-properties"
+    ],
+    "rules": {
+        "prettier/prettier": "error",
+        "indent": [
+            "off",
+            4
+        ],
+        "linebreak-style": [
+            "warn",
+            "unix"
+        ],
+        "no-console": "off",
+        "no-mixed-spaces-and-tabs": "warn",
+        "no-unused-vars": "off",
+        "react/prop-types": [
+            "warn",
+            {
+                "skipUndeclared": true
+            }
+        ],
+        "quotes": [
+            "off",
+            "single"
+        ],
+        "semi": [
+            "off",
+            "always"
+        ]
+    }
 }

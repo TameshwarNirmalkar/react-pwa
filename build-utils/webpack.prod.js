@@ -41,7 +41,7 @@ module.exports = {
     devtool: 'source-map',
     plugins: [
         new Dotenv({
-            path: './.env.production',
+            path: './config/.env.prod',
           }),
     ],
 };
